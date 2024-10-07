@@ -3,7 +3,7 @@ import pandas as pd
 import pickle  # Import pickle to load the model
 
 class LinearRegressionFromScratch:
-    def __init__(self):
+    def _init_(self):
         self.coefficients = None
 
     def fit(self, X, y):
@@ -16,6 +16,9 @@ class LinearRegressionFromScratch:
 
 def mean_squared_error(y_true, y_pred):
     return np.mean((y_true - y_pred) ** 2)
+
+def root_mean_squared_error(y_true, y_pred):
+    return np.sqrt(mean_squared_error(y_true, y_pred))
 
 def r_squared(y_true, y_pred):
     ss_total = np.sum((y_true - np.mean(y_true)) ** 2)
@@ -45,16 +48,19 @@ def evaluate_and_save_predictions(file_path):
     
     # Calculate evaluation metrics
     mse = mean_squared_error(y, y_pred)
+    rmse = root_mean_squared_error(y, y_pred)
     r2 = r_squared(y, y_pred)
     
     # Print the evaluation metrics in the output terminal
     print(f"Mean Squared Error: {mse:.2f}")
+    print(f"Root Mean Squared Error: {rmse:.2f}")
     print(f"R-squared: {r2:.2f}")
     
     # Save the evaluation metrics to a file
     with open('regression_task/results/train_metrics.txt', 'w') as f:
         f.write("Regression Metrics:\n")
         f.write(f"Mean Squared Error: {mse:.2f}\n")
+        f.write(f"Root Mean Squared Error: {rmse:.2f}\n")
         f.write(f"R-squared: {r2:.2f}\n")
     
     print("Evaluation metrics saved successfully.")
